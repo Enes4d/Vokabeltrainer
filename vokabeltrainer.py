@@ -36,16 +36,22 @@ random.shuffle(vokabeln_liste)
 
 Punkte = 0
 
-for englisch, deutsch in vokabeln_liste:
-    Vokabel = input(f"Was bedeutet {englisch} auf Deutsch? ").strip()
-    if Vokabel == deutsch:
-        print("Richtig! Nächste Vokabel. ")
-        Punkte += 1
-    else:
-        print(f"Falsch. Die richtige Antwort war: {deutsch}. Nächste Vokabel. ")
+while True:
+    for englisch, deutsch in vokabeln_liste:
+        Vokabel = input(f"Was bedeutet {englisch} auf Deutsch? ").strip()
+        if Vokabel == deutsch:
+            print("Richtig! Nächste Vokabel. ")
+            Punkte += 1
+        else:
+            print(f"Falsch. Die richtige Antwort war: {deutsch}. Nächste Vokabel. ")
 
-print("")
-print(f"Du hast {Punkte} von {len(vokabeln_liste)} Vokabeln richtig beantwortet.")
+    print("")
+    print(f"Du hast {Punkte} von {len(vokabeln_liste)} Vokabeln richtig beantwortet.")
+    Punkte = 0
+    Weiter = input("Weiter? (Ja = 1), (Nein = 2) ").strip()
+    if Weiter == "2":
+        break
+
 
 with open("vokabeln.json", "w") as datei:
     json.dump(vokabeln, datei)
