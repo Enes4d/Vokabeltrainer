@@ -55,3 +55,4 @@ while True:
 
 with open("vokabeln.json", "w") as datei:
     json.dump(vokabeln, datei)
+    
