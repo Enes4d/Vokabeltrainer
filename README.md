@@ -1,14 +1,17 @@
 # Vokabeltrainer
-Ein Vokabeltrainer für Python
+
+Ein Vokabeltrainer in Python.
 
 ## Installation
 1. Python installieren (python.org)
 2. Repository herunterladen
-3. Im Terminal ausführen: python vokabeltrainer.py
+3. Im Terminal ausführen: python vokabeltrainer_v2.py
 
-Nachdem ausführen des Codes gibt man das Englische Wort und dann das Deutsche Wort ein.
-Man kann so viele Wörter wie man möchte hinzufügen.
-Dann wird man auch gefragt ob man Vokabeln löschen möchte.
-Ähnlich wie beim hinzufügen von Vokabeln gibt man die Englische Vokabel ein um sie zu löschen.
-Dannach wird man jedes Wort das man eingegeben hat abgefragt.
-Wenn alle Wörter abgefragt wurden, werden die Wörter gespeichert und das Programm schliest sich.
+## Funktionen
+- Vokabeln lernen in zufälliger Reihenfolge mit Punktestand
+- Vokabeln hinzufügen
+- Vokabeln löschen
+- Vokabeln werden automatisch gespeichert
+
+## Benutzung
+Das Programm startet mit einem Menü. Einfach die Zahl der gewünschten Aktion eintippen und Enter drücken.
