@@ -46,12 +46,28 @@ def vokabelhinzufügen(vokabeln):
         if weiter():
             break
 
+def vokabelnanzeigen(vokabeln):
+    vokabeln_liste = list(vokabeln.items())
+    for index, (englisch, deutsch) in enumerate(vokabeln_liste, 1):
+        print(f"{index} {englisch} = {deutsch}")
+        print("")
+
 def vokabellöschen(vokabeln):
     while True:
-        del_1 = input("Schreibe die Englische Vokabel die du löschen möchtest. ").strip()
-        del(vokabeln[del_1])
-        if weiter():
-            break
+        vokabeln_liste = list(vokabeln.items())
+        vokabelnanzeigen(vokabeln)
+        del_1 = input("Schreibe die Nummer der Vokabel, die du löschen möchtest. ").strip()
+        try:
+            nummer = int(del_1) - 1
+            englisch, deutsch = vokabeln_liste[nummer]
+            del(vokabeln[englisch])
+            print(f"{englisch} wurde gelöscht. ")
+            if weiter():
+                break
+        except ValueError:
+            print("Bitte eine Nummer eingeben!")
+        except IndexError:
+            print("Diese Nummer gibt es nicht! ")
 
 def vokabelnlernen(vokabeln, merkliste):
     Punkte = 0
@@ -106,14 +122,19 @@ while True:
     menu()
     auswahl = input("\n Deine Wahl: ").strip()
     if auswahl == "1":
+        print("")
         vokabelnlernen(vokabeln, merkliste)
     elif auswahl == "2":
+        print("")
         vokabelhinzufügen(vokabeln)
     elif auswahl == "3":
+        print("")
         vokabellöschen(vokabeln)
     elif auswahl == "4":
+        print("")
         merkliste_abfragen(merkliste)
     elif auswahl == "5":
+        print("")
         speichern(vokabeln)
         merkliste_speichern(merkliste)
         print("Tschüss")
