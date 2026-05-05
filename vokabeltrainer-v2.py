@@ -1,14 +1,25 @@
 import json, random
 
-def laden():
+def sprachenladen():
     try:
-        with open("vokabeln.json", "r") as datei:
+        with open("sprachen.json", "r") as datei:
+            return json.load(datei)
+    except FileNotFoundError:
+        return []
+
+def sprachenspeichern(sprachen):
+    with open("sprachen.json", 'w') as datei:
+        json.dump(sprachen, datei)
+
+def laden(dateiname):
+    try:
+        with open(dateiname, "r") as datei:
             return json.load(datei)
     except FileNotFoundError:
         return {}
     
-def speichern(vokabeln):
-    with open("vokabeln.json", "w") as datei:
+def speichern(vokabeln, dateiname):
+    with open(dateiname, "w") as datei:
         json.dump(vokabeln, datei)
 
 def merkliste_laden():
@@ -30,13 +41,12 @@ def weiter():
 
 def menu():
     print("\n=== Vokabeltrainer ===")
+    print("0. Sprache hinzufügen")
     print("1. Vokabeln lernen")
     print("2. Vokabeln hinzufügen")
     print("3. Vokabeln löschen")
     print("4. Merkliste abfragen")
     print("5. Beenden")
-
-vokabeln = laden()
 
 def vokabelhinzufügen(vokabeln):
     while True:
@@ -118,10 +128,41 @@ def merkliste_abfragen(merkliste):
         if weiter():
             break
 
+sprachen = sprachenladen()
+
+if sprachen:
+    neue_sprache = sprachen[0]
+    dateiname = f"{neue_sprache}.json"
+    vokabeln = laden(dateiname)
+else:
+    dateiname = None
+    vokabeln = {}
+
 while True:
     menu()
     auswahl = input("\n Deine Wahl: ").strip()
-    if auswahl == "1":
+    if auswahl == "0":
+        print("")
+        if not sprachen:
+            print("Keine Sprachen vorhanden. Neue Sprache hinzufügen. ")
+            neue_sprache = input("Sprache: ").strip().lower()
+            sprachen.append(neue_sprache)
+            sprachenspeichern(sprachen)
+        auswahl_2 = input("Sprache wählen(1), Sprache hinzufügen(2): ")
+        if auswahl_2 == "1":
+            print("\nVerfügbare Sprachen: ")
+            for index, sprache in enumerate(sprachen, 1):
+                print(f"{index} {sprache}")
+                print("")
+            auswahl = input("Wähle eine der Sprachen: ").strip()
+            neue_sprache = sprachen[int(auswahl)-1]
+        elif auswahl_2 == "2":
+            neue_sprache = input("Sprache: ").strip().lower()
+            sprachen.append(neue_sprache)
+            sprachenspeichern(sprachen)
+        dateiname = f"{neue_sprache}.json"
+        vokabeln = laden(dateiname)
+    elif auswahl == "1":
         print("")
         vokabelnlernen(vokabeln, merkliste)
     elif auswahl == "2":
@@ -135,7 +176,7 @@ while True:
         merkliste_abfragen(merkliste)
     elif auswahl == "5":
         print("")
-        speichern(vokabeln)
+        speichern(vokabeln, dateiname)
         merkliste_speichern(merkliste)
         print("Tschüss")
         break
