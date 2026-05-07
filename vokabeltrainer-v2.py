@@ -49,9 +49,9 @@ def menu():
     print("5. Beenden")
     print("6. Einstellungen")
 
-def vokabelhinzufügen(vokabeln):
+def vokabelhinzufügen(vokabeln, sprache):
     while True:
-        key_1 = input(f"Schreibe die Englische Vokabel auf: ").strip()
+        key_1 = input(f"Schreibe die {sprache} Vokabel auf: ").strip()
         value_1 = input("Schreibe die Deutsche Vokabel auf: ").strip()
         vokabeln[key_1.lower()] = value_1
         if weiter():
@@ -59,8 +59,8 @@ def vokabelhinzufügen(vokabeln):
 
 def vokabelnanzeigen(vokabeln):
     vokabeln_liste = list(vokabeln.items())
-    for index, (englisch, deutsch) in enumerate(vokabeln_liste, 1):
-        print(f"{index} {englisch} = {deutsch}")
+    for index, (sprache, deutsch) in enumerate(vokabeln_liste, 1):
+        print(f"{index} {sprache} = {deutsch}")
         print("")
 
 def vokabellöschen(vokabeln):
@@ -70,9 +70,9 @@ def vokabellöschen(vokabeln):
         del_1 = input("Schreibe die Nummer der Vokabel, die du löschen möchtest. ").strip()
         try:
             nummer = int(del_1) - 1
-            englisch, deutsch = vokabeln_liste[nummer]
-            del(vokabeln[englisch])
-            print(f"{englisch} wurde gelöscht. ")
+            sprache, deutsch = vokabeln_liste[nummer]
+            del(vokabeln[sprache])
+            print(f"{sprache} wurde gelöscht. ")
             if weiter():
                 break
         except ValueError:
@@ -85,8 +85,8 @@ def vokabelnlernen(vokabeln, merkliste):
     vokabeln_liste = list(vokabeln.items())
     random.shuffle(vokabeln_liste)
     while True:
-        for englisch, deutsch in vokabeln_liste:
-            voc_1 = input(f"Was heißt {englisch} auf Deutsch? ")
+        for sprache, deutsch in vokabeln_liste:
+            voc_1 = input(f"Was heißt {sprache} auf Deutsch? ")
             if voc_1 == deutsch:
                 print("Richtig! Nächste Vokabel.")
                 print("")
@@ -94,7 +94,7 @@ def vokabelnlernen(vokabeln, merkliste):
             else:
                 print(f"Falsch. Die richtige Antwort war {deutsch}. ")
                 if einstellungen_dict["merkliste_aktiv"]:
-                    merkliste[englisch] = deutsch
+                    merkliste[sprache] = deutsch
                     print("Diese Vokabel wurde der Merkliste hinzugefügt. Nächste Vokabel. ")
                 print("")
                 
@@ -197,7 +197,7 @@ while True:
         vokabelnlernen(vokabeln, merkliste)
     elif auswahl == "2":
         print("")
-        vokabelhinzufügen(vokabeln)
+        vokabelhinzufügen(vokabeln, neue_sprache)
     elif auswahl == "3":
         print("")
         vokabellöschen(vokabeln)
