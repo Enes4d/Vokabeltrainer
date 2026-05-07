@@ -47,10 +47,11 @@ def menu():
     print("3. Vokabeln löschen")
     print("4. Merkliste abfragen")
     print("5. Beenden")
+    print("6. Einstellungen")
 
 def vokabelhinzufügen(vokabeln):
     while True:
-        key_1 = input("Schreibe die Englische Vokabel auf: ").strip()
+        key_1 = input(f"Schreibe die Englische Vokabel auf: ").strip()
         value_1 = input("Schreibe die Deutsche Vokabel auf: ").strip()
         vokabeln[key_1.lower()] = value_1
         if weiter():
@@ -91,9 +92,10 @@ def vokabelnlernen(vokabeln, merkliste):
                 print("")
                 Punkte += 1
             else:
-                merkliste[englisch] = deutsch
                 print(f"Falsch. Die richtige Antwort war {deutsch}. ")
-                print("Diese Vokabel wurde der Merkliste hinzugefügt. Nächste Vokabel. ")
+                if einstellungen_dict["merkliste_aktiv"]:
+                    merkliste[englisch] = deutsch
+                    print("Diese Vokabel wurde der Merkliste hinzugefügt. Nächste Vokabel. ")
                 print("")
                 
         print(f"Du hast {Punkte} von {len(vokabeln_liste)} Vokabeln richtig beantwortet.")
@@ -127,6 +129,34 @@ def merkliste_abfragen(merkliste):
         Punkte = 0
         if weiter():
             break
+
+def einstellungen(einstellungen_dict):
+    while True:
+        print("\n=== Einstellungen ===")
+        print("1. Merkliste an/aus schalten. ")
+        print("2. Zurück ")
+        print("")
+        auswahl = input("Bitte eine Nummer eingeben! ")
+        if auswahl == "2":
+            break
+        elif auswahl == "1":
+            einstellungen_dict["merkliste_aktiv"] = not einstellungen_dict["merkliste_aktiv"]
+            Status = "AN" if einstellungen_dict["merkliste_aktiv"] else "Aus"
+            print(f"Merkliste ist jetzt {Status}. ")
+            einstellung_speichern(einstellungen_dict)
+
+def einstellung_laden():
+    try:
+        with open("einstellungen.json", "r") as datei:
+            return json.load(datei)
+    except FileNotFoundError:
+        return {"merkliste_aktiv": True}
+    
+def einstellung_speichern(einstellungen):
+    with open("einstellungen.json", "w") as datei:
+        json.dump(einstellungen, datei)
+
+einstellungen_dict = einstellung_laden()
 
 sprachen = sprachenladen()
 
@@ -180,6 +210,8 @@ while True:
         merkliste_speichern(merkliste)
         print("Tschüss")
         break
+    elif auswahl == "6":
+        einstellungen(einstellungen_dict)
     else:
         print("")
         print("Dein Input ist ungültig bitte Tippe 1, 2, 3, 4 oder 5. ")
