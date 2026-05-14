@@ -10,8 +10,8 @@ Ein Vokabeltrainer mit grafischer Oberfläche (GUI) gebaut mit Python und tkinte
 ## Funktionen
 - Vokabeln lernen in zufälliger Reihenfolge
 - Vokabeln hinzufügen und löschen
-- Merkliste — falsch beantwortete Vokabeln werden automatisch gespeichert
-- Mehrsprachigkeit — beliebig viele Sprachen hinzufügbar
+- Merkliste = falsch beantwortete Vokabeln werden automatisch gespeichert
+- Mehrsprachigkeit = beliebig viele Sprachen hinzufügbar
 - Einstellungen:
   - Merkliste an/aus
   - Richtig beantwortete Vokabeln in der Merkliste behalten
